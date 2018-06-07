@@ -5,14 +5,14 @@ defmodule Scheduler.Schedule.Scheduling do
 
   schema "schedulings" do
     field(:name, :string)
-
+    belongs_to(:company, Scheduler.Companies.Company)
     timestamps()
   end
 
   @doc false
   def changeset(scheduling, attrs) do
     scheduling
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :company_id])
     |> validate_required([:name])
   end
 end

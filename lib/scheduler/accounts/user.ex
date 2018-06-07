@@ -7,6 +7,12 @@ defmodule Scheduler.Accounts.User do
     field(:name, :string)
     field(:password, :string)
 
+    many_to_many(
+      :company,
+      Scheduler.Companies.Company,
+      join_through: Scheduler.Companies.CompaniesUsers
+    )
+
     timestamps()
   end
 

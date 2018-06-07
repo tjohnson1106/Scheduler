@@ -21,6 +21,7 @@ defmodule SchedulerWeb.Router do
     resources("/users", UserController)
     resources("/shifts", ShiftController)
     resources("/schedulings", SchedulingController)
+    resources("/companies", CompanyController)
   end
 
   # Other scopes may use custom stacks.
