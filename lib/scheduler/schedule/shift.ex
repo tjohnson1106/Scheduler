@@ -13,8 +13,7 @@ defmodule Scheduler.Schedule.Shift do
   @doc false
   def changeset(shift, attrs) do
     shift
-    |> cast(attrs, [:start_time, :end_time])
-    # add user after generating shift and schedule
+    |> cast(attrs, [:start_time, :end_time, :user_id])
     |> validate_required([:start_time, :end_time, :user_id])
   end
 end
