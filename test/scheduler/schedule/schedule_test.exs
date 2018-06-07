@@ -64,4 +64,64 @@ defmodule Scheduler.ScheduleTest do
       assert %Ecto.Changeset{} = Schedule.change_shift(shift)
     end
   end
+
+  describe "schedulings" do
+    alias Scheduler.Schedule.Scheduling
+
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
+
+    def scheduling_fixture(attrs \\ %{}) do
+      {:ok, scheduling} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Schedule.create_scheduling()
+
+      scheduling
+    end
+
+    test "list_schedulings/0 returns all schedulings" do
+      scheduling = scheduling_fixture()
+      assert Schedule.list_schedulings() == [scheduling]
+    end
+
+    test "get_scheduling!/1 returns the scheduling with given id" do
+      scheduling = scheduling_fixture()
+      assert Schedule.get_scheduling!(scheduling.id) == scheduling
+    end
+
+    test "create_scheduling/1 with valid data creates a scheduling" do
+      assert {:ok, %Scheduling{} = scheduling} = Schedule.create_scheduling(@valid_attrs)
+      assert scheduling.name == "some name"
+    end
+
+    test "create_scheduling/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schedule.create_scheduling(@invalid_attrs)
+    end
+
+    test "update_scheduling/2 with valid data updates the scheduling" do
+      scheduling = scheduling_fixture()
+      assert {:ok, scheduling} = Schedule.update_scheduling(scheduling, @update_attrs)
+      assert %Scheduling{} = scheduling
+      assert scheduling.name == "some updated name"
+    end
+
+    test "update_scheduling/2 with invalid data returns error changeset" do
+      scheduling = scheduling_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schedule.update_scheduling(scheduling, @invalid_attrs)
+      assert scheduling == Schedule.get_scheduling!(scheduling.id)
+    end
+
+    test "delete_scheduling/1 deletes the scheduling" do
+      scheduling = scheduling_fixture()
+      assert {:ok, %Scheduling{}} = Schedule.delete_scheduling(scheduling)
+      assert_raise Ecto.NoResultsError, fn -> Schedule.get_scheduling!(scheduling.id) end
+    end
+
+    test "change_scheduling/1 returns a scheduling changeset" do
+      scheduling = scheduling_fixture()
+      assert %Ecto.Changeset{} = Schedule.change_scheduling(scheduling)
+    end
+  end
 end

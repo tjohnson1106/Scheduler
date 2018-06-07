@@ -101,4 +101,100 @@ defmodule Scheduler.Schedule do
   def change_shift(%Shift{} = shift) do
     Shift.changeset(shift, %{})
   end
+
+  alias Scheduler.Schedule.Scheduling
+
+  @doc """
+  Returns the list of schedulings.
+
+  ## Examples
+
+      iex> list_schedulings()
+      [%Scheduling{}, ...]
+
+  """
+  def list_schedulings do
+    Repo.all(Scheduling)
+  end
+
+  @doc """
+  Gets a single scheduling.
+
+  Raises `Ecto.NoResultsError` if the Scheduling does not exist.
+
+  ## Examples
+
+      iex> get_scheduling!(123)
+      %Scheduling{}
+
+      iex> get_scheduling!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_scheduling!(id), do: Repo.get!(Scheduling, id)
+
+  @doc """
+  Creates a scheduling.
+
+  ## Examples
+
+      iex> create_scheduling(%{field: value})
+      {:ok, %Scheduling{}}
+
+      iex> create_scheduling(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_scheduling(attrs \\ %{}) do
+    %Scheduling{}
+    |> Scheduling.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a scheduling.
+
+  ## Examples
+
+      iex> update_scheduling(scheduling, %{field: new_value})
+      {:ok, %Scheduling{}}
+
+      iex> update_scheduling(scheduling, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_scheduling(%Scheduling{} = scheduling, attrs) do
+    scheduling
+    |> Scheduling.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Scheduling.
+
+  ## Examples
+
+      iex> delete_scheduling(scheduling)
+      {:ok, %Scheduling{}}
+
+      iex> delete_scheduling(scheduling)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_scheduling(%Scheduling{} = scheduling) do
+    Repo.delete(scheduling)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking scheduling changes.
+
+  ## Examples
+
+      iex> change_scheduling(scheduling)
+      %Ecto.Changeset{source: %Scheduling{}}
+
+  """
+  def change_scheduling(%Scheduling{} = scheduling) do
+    Scheduling.changeset(scheduling, %{})
+  end
 end
